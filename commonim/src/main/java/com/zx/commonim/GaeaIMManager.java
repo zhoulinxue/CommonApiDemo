@@ -1,15 +1,19 @@
 package com.zx.commonim;
 
-import com.zx.commonim.api.IMContact;
-import com.zx.commonim.api.IMPlatform;
-import com.zx.commonim.api.IMSender;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+
 import com.zx.commonim.api.IMServer;
 import com.zx.commonim.bean.GeaeIMRecord;
 import com.zx.commonim.bean.GeaeIMUser;
-import com.zx.commonim.impl.NIMContact;
-import com.zx.commonim.impl.NIMSender;
-import com.zx.commonim.impl.NIMService;
 
+import java.lang.reflect.Array;
+import java.lang.reflect.GenericArrayType;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+import java.lang.reflect.TypeVariable;
+import java.lang.reflect.WildcardType;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,23 +23,49 @@ import java.util.List;
  * creatTime: 2019/6/6
  */
 public class GaeaIMManager {
-
-    private static IMSender mSender;
+    private static GaeaIMManager manager;
     private static IMServer imServer;
-    private static IMContact mContact;
+    private Context mContext;
+    private static SharedPreferences mPreference;
+
+    public GaeaIMManager(Context mContext) {
+        this.mContext = mContext;
+    }
 
     /**
-     * 初始化sdk  平台
+     * 初始化api
      *
-     * @param platform
+     * @param context
+     * @return
      */
-    public static void init(IMPlatform platform) {
-        switch (platform) {
-            case NIM:
-                mSender = new NIMSender();
-                imServer = new NIMService();
-                mContact = new NIMContact();
-                break;
+    public static GaeaIMManager getInstance(Context context) {
+        if (manager == null) {
+            mPreference = PreferenceManager.getDefaultSharedPreferences(context);
+            manager = new GaeaIMManager(context);
+        }
+        return manager;
+    }
+
+    public IMServer init(Class mClass) {
+        imServer = (IMServer) create(mClass);
+        return imServer;
+    }
+
+    public static <T> T create(Class<T> service) {
+        try {
+            return (T) service.newInstance();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * @param user
+     */
+    public void login(GeaeIMUser user) {
+        if (imServer != null) {
+            imServer.login(user);
         }
     }
 
@@ -69,8 +99,8 @@ public class GaeaIMManager {
      * @return
      */
     public List<GeaeIMUser> getContactList(String uid) {
-        if (mContact != null) {
-            return mContact.getContactList(uid);
+        if (imServer != null) {
+            return imServer.getContactList(uid);
         }
         return new ArrayList<>();
     }
@@ -82,8 +112,8 @@ public class GaeaIMManager {
      * @return
      */
     public List<GeaeIMRecord> getRecord(String uid) {
-        if (mContact != null) {
-            mContact.getIMRecord(uid);
+        if (imServer != null) {
+            imServer.getIMRecord(uid);
         }
         return new ArrayList<>();
     }
