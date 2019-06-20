@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import com.zx.commonim.api.JsonParser;
+import com.zx.commonim.impl.FastjsonParser;
 import com.zx.commonim.utils.Constants;
 
 /**
@@ -19,6 +21,15 @@ public class AppConfig {
     private int mScreenWidth;
     private Context mContext;
     private SharedPreferences mPreference;
+    private JsonParser mParser;
+
+    public JsonParser getParser() {
+        return mParser;
+    }
+
+    public void setParser(JsonParser mParser) {
+        this.mParser = mParser;
+    }
 
     public SharedPreferences getPreference() {
         return mPreference;
@@ -31,6 +42,7 @@ public class AppConfig {
     public AppConfig(Context mContext) {
         this.mContext = mContext;
         mPreference = PreferenceManager.getDefaultSharedPreferences(mContext);
+        mParser=new FastjsonParser();
     }
 
     public Class getEnterClass() {

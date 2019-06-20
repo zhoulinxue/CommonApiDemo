@@ -13,17 +13,9 @@ public interface JsonParser {
     public String toJSONString(Object object);
 
     //
-    public String ObjectToJsonString(Object object);
-
-    //
     public Object parseObject(String json, Class<?> clazz);
 
     // 解析集合
     public Object parseArray(String json, Class<?> clazz);
 
-    // 解析集合
-    public Object jsonStringParseArray(String json, Class<?> clazz);
-
-    // json 转对象
-    public Object jsonStringToObJect(String json, Class<?> clazz);
 }

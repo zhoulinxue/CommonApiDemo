@@ -38,7 +38,6 @@ public class NIMService implements IMServer<IMMessage>, IUsertransfer<LoginInfo>
     private Context mContext;
     private AppConfig mConfig;
     private GeaeIMUser mUser;
-    private JsonParser mParser;
     LoginInfo mInfo = null;
 
     @Override
@@ -60,7 +59,7 @@ public class NIMService implements IMServer<IMMessage>, IUsertransfer<LoginInfo>
                 new RequestCallback<LoginInfo>() {
                     @Override
                     public void onSuccess(LoginInfo param) {
-                        saveLoginConfig(mParser.ObjectToJsonString(param));
+                        saveLoginConfig(mConfig.getParser().toJSONString(param));
                     }
 
                     @Override
@@ -149,7 +148,7 @@ public class NIMService implements IMServer<IMMessage>, IUsertransfer<LoginInfo>
         this.mConfig = config;
         String account = getAccount();
         if (!TextUtils.isEmpty(account)) {
-            mInfo = (LoginInfo) mParser.jsonStringToObJect(account, LoginInfo.class);
+            mInfo = (LoginInfo) mConfig.getParser().parseObject(account, LoginInfo.class);
         }
         return this;
     }
