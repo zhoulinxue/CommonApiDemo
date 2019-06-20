@@ -7,6 +7,7 @@ import android.preference.PreferenceManager;
 import com.zx.commonim.api.IMServer;
 import com.zx.commonim.bean.GeaeIMRecord;
 import com.zx.commonim.bean.GeaeIMUser;
+
 import java.util.ArrayList;
 import java.util.List;
 
