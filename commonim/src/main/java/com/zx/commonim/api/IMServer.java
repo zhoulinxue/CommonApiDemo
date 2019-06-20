@@ -37,7 +37,9 @@ public interface IMServer<T> {
     /**
      * 发送消息
      */
-    public void sendMessage(T message);
+    public void sendMessage(GeaeMessage message);
+
+    public T transferMessage(GeaeMessage message);
 
     /**
      * @param config

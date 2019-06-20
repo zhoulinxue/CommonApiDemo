@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import com.zx.commonim.api.GeaeMessage;
 import com.zx.commonim.api.IMServer;
 import com.zx.commonim.bean.GeaeIMRecord;
 import com.zx.commonim.bean.GeaeIMUser;
@@ -55,34 +56,11 @@ public class GaeaIMManager {
     }
 
     /**
-     * @param user
+     * @param message
      */
-    public void login(GeaeIMUser user) {
+    public void sendMessage(GeaeMessage message) {
         if (imServer != null) {
-            imServer.login(user);
-        }
-    }
-
-    /**
-     * 发送消息
-     *
-     * @param object
-     */
-    public void sendMessage(Object object) {
-        if (imServer != null) {
-            imServer.sendMessage(object);
-        }
-    }
-
-    /**
-     * 连接服务器
-     *
-     * @param ip
-     * @param port
-     */
-    public void connect(String ip, int port) {
-        if (imServer != null) {
-            imServer.connect(ip, port);
+            imServer.sendMessage(message);
         }
     }
 

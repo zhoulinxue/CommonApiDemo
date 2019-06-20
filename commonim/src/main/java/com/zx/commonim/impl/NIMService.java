@@ -20,6 +20,7 @@ import com.netease.nimlib.sdk.uinfo.UserInfoProvider;
 import com.netease.nimlib.sdk.uinfo.model.UserInfo;
 import com.zx.commonim.AppConfig;
 import com.zx.commonim.R;
+import com.zx.commonim.api.GeaeMessage;
 import com.zx.commonim.api.IMServer;
 import com.zx.commonim.api.IUsertransfer;
 import com.zx.commonim.api.JsonParser;
@@ -139,8 +140,14 @@ public class NIMService implements IMServer<IMMessage>, IUsertransfer<LoginInfo>
     }
 
     @Override
-    public void sendMessage(IMMessage message) {
+    public void sendMessage(GeaeMessage message) {
+        IMMessage msg = transferMessage(message);
 
+    }
+
+    @Override
+    public IMMessage transferMessage(GeaeMessage message) {
+        return null;
     }
 
     @Override
