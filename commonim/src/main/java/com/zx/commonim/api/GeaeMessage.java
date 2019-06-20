@@ -6,5 +6,5 @@ package com.zx.commonim.api;
  * creatTime: 2019/6/6
  */
 public interface GeaeMessage {
-    public IMPlatform getPlateform();
+
 }
