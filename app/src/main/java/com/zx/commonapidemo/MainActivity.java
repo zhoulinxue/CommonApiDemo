@@ -1,7 +1,5 @@
 package com.zx.commonapidemo;
 
-import android.animation.ObjectAnimator;
-import android.animation.ValueAnimator;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,7 +9,6 @@ import android.view.animation.AnimationUtils;
 
 import com.zx.commonim.AppConfig;
 import com.zx.commonim.GaeaIMManager;
-import com.zx.commonim.api.IMPlatform;
 import com.zx.commonim.impl.NIMService;
 
 public class MainActivity extends AppCompatActivity {

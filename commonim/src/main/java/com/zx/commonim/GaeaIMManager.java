@@ -7,13 +7,6 @@ import android.preference.PreferenceManager;
 import com.zx.commonim.api.IMServer;
 import com.zx.commonim.bean.GeaeIMRecord;
 import com.zx.commonim.bean.GeaeIMUser;
-
-import java.lang.reflect.Array;
-import java.lang.reflect.GenericArrayType;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
-import java.lang.reflect.TypeVariable;
-import java.lang.reflect.WildcardType;
 import java.util.ArrayList;
 import java.util.List;
 
