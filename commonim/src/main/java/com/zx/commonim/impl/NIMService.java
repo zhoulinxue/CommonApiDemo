@@ -143,6 +143,7 @@ public class NIMService implements IMServer<IMMessage>, IUsertransfer<LoginInfo>
     public void sendMessage(GeaeMessage message) {
         IMMessage msg = transferMessage(message);
 
+
     }
 
     @Override
