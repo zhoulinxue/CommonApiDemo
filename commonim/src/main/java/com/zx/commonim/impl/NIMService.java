@@ -32,7 +32,6 @@ import java.util.List;
  * creatTime: 2019/6/6
  */
 public class NIMService implements IMServer<IMMessage>, IUserTransfer<LoginInfo> {
-    private Context mContext;
     private AppConfig mConfig;
     private GeaeIMUser mUser;
     LoginInfo mInfo = null;
