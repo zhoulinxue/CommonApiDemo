@@ -1,12 +1,10 @@
 package com.zx.commonim.impl;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.RequestCallback;
@@ -19,11 +17,9 @@ import com.netease.nimlib.sdk.msg.model.IMMessage;
 import com.netease.nimlib.sdk.uinfo.UserInfoProvider;
 import com.netease.nimlib.sdk.uinfo.model.UserInfo;
 import com.zx.commonim.AppConfig;
-import com.zx.commonim.R;
 import com.zx.commonim.api.GeaeMessage;
 import com.zx.commonim.api.IMServer;
-import com.zx.commonim.api.IUsertransfer;
-import com.zx.commonim.api.JsonParser;
+import com.zx.commonim.api.IUserTransfer;
 import com.zx.commonim.bean.GeaeIMRecord;
 import com.zx.commonim.bean.GeaeIMUser;
 import com.zx.commonim.utils.Constants;
@@ -35,7 +31,7 @@ import java.util.List;
  * auther :zx
  * creatTime: 2019/6/6
  */
-public class NIMService implements IMServer<IMMessage>, IUsertransfer<LoginInfo> {
+public class NIMService implements IMServer<IMMessage>, IUserTransfer<LoginInfo> {
     private Context mContext;
     private AppConfig mConfig;
     private GeaeIMUser mUser;
