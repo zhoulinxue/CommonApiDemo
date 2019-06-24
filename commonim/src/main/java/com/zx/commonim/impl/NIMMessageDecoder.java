@@ -27,7 +27,6 @@ public class NIMMessageDecoder implements IMessageDecoder<IMMessage>, ISendType<
                 msg = MessageBuilder.createFileMessage(message.getTo(), onSendType(message.getSendType()), imageMessage.getContent(), "[图片]");
                 break;
         }
-
         return msg;
     }
 

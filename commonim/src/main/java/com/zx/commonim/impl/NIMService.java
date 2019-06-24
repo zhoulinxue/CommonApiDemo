@@ -23,16 +23,13 @@ import com.netease.nimlib.sdk.uinfo.UserInfoProvider;
 import com.netease.nimlib.sdk.uinfo.model.UserInfo;
 import com.zx.commonim.AppConfig;
 import com.zx.commonim.api.IMessageDecoder;
-import com.zx.commonim.api.ISendType;
 import com.zx.commonim.constant.MessageStatus;
 import com.zx.commonim.api.SendMessageLisenter;
-import com.zx.commonim.constant.SendType;
 import com.zx.commonim.message.IMessage;
 import com.zx.commonim.api.IMServer;
 import com.zx.commonim.api.IUserDecoder;
 import com.zx.commonim.bean.GeaeIMRecord;
 import com.zx.commonim.bean.GeaeIMUser;
-import com.zx.commonim.message.ImageMessage;
 import com.zx.commonim.constant.Constants;
 
 import java.util.List;
@@ -43,13 +40,13 @@ import java.util.Map;
  * auther :zx
  * creatTime: 2019/6/6
  */
-public class NIMService implements IMServer<IMMessage> {
+public class NIMService implements IMServer {
     private String TAG = NIMService.class.getSimpleName();
     // 应用配置类
     private AppConfig mConfig;
     // 用户信息类
     private GeaeIMUser mUser;
-    // 第三方 用户信心类
+    // 第三方 用户信息类
     LoginInfo mInfo = null;
     // 用户信息 编、解 器
     IUserDecoder<LoginInfo> mUserDecoder = new NIMUserDecoder();
@@ -64,7 +61,7 @@ public class NIMService implements IMServer<IMMessage> {
     @Override
     public boolean connect() {
         NIMClient.init(mConfig.getContext(), mInfo, options());
-        return false;
+        return true;
     }
 
     @Override
@@ -205,6 +202,11 @@ public class NIMService implements IMServer<IMMessage> {
             public void onException(Throwable exception) {
                 exception.printStackTrace();
                 Log.e(TAG, "发送异常");
+                msg.setStatus(MsgStatusEnum.fail);
+                message.setStatus(MessageStatus.FAILED);
+                if (lisenter != null) {
+                    lisenter.onFailed(message);
+                }
             }
         });
     }
@@ -223,8 +225,9 @@ public class NIMService implements IMServer<IMMessage> {
         if (map == null) {
             message.setLocalExtension(aMap);
         }
-
-        message.setConfig(getCustomMessageConfig());
+        CustomMessageConfig config = new CustomMessageConfig();
+        config.enableRoaming = false;
+        message.setConfig(config);
         //忽略易盾
         NIMAntiSpamOption antiSpamOption = new NIMAntiSpamOption();
         antiSpamOption.enable = false;
@@ -232,16 +235,6 @@ public class NIMService implements IMServer<IMMessage> {
         return message;
     }
 
-    /**
-     * 消息配置
-     *
-     * @return
-     */
-    private CustomMessageConfig getCustomMessageConfig() {
-        CustomMessageConfig config = new CustomMessageConfig();
-        config.enableRoaming = false;
-        return config;
-    }
 
     @Override
     public NIMService initAppConfig(AppConfig config) {

@@ -13,7 +13,7 @@ import java.util.List;
  * auther :zx
  * creatTime: 2019/6/6
  */
-public interface IMServer<T> {
+public interface IMServer {
 
     /**
      * 创建连接
