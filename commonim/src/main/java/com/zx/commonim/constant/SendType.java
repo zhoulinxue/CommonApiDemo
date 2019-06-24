@@ -6,5 +6,5 @@ package com.zx.commonim.constant;
  * creatTime: 2019/6/24
  */
 public enum SendType {
-    PERSON, GROUP;
+    PERSON, GROUP,CUSTOMS;
 }
