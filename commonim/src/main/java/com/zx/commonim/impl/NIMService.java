@@ -22,13 +22,14 @@ import com.netease.nimlib.sdk.msg.model.NIMAntiSpamOption;
 import com.netease.nimlib.sdk.uinfo.UserInfoProvider;
 import com.netease.nimlib.sdk.uinfo.model.UserInfo;
 import com.zx.commonim.AppConfig;
+import com.zx.commonim.api.IMessageDecoder;
 import com.zx.commonim.api.ISendType;
 import com.zx.commonim.constant.MessageStatus;
 import com.zx.commonim.api.SendMessageLisenter;
 import com.zx.commonim.constant.SendType;
 import com.zx.commonim.message.IMessage;
 import com.zx.commonim.api.IMServer;
-import com.zx.commonim.api.IUserTransfer;
+import com.zx.commonim.api.IUserDecoder;
 import com.zx.commonim.bean.GeaeIMRecord;
 import com.zx.commonim.bean.GeaeIMUser;
 import com.zx.commonim.message.ImageMessage;
@@ -42,11 +43,18 @@ import java.util.Map;
  * auther :zx
  * creatTime: 2019/6/6
  */
-public class NIMService implements IMServer<IMMessage>, IUserTransfer<LoginInfo>, ISendType<SessionTypeEnum> {
+public class NIMService implements IMServer<IMMessage> {
     private String TAG = NIMService.class.getSimpleName();
+    // 应用配置类
     private AppConfig mConfig;
+    // 用户信息类
     private GeaeIMUser mUser;
+    // 第三方 用户信心类
     LoginInfo mInfo = null;
+    // 用户信息 编、解 器
+    IUserDecoder<LoginInfo> mUserDecoder = new NIMUserDecoder();
+    // 消息信息  编、解 器
+    IMessageDecoder<IMMessage> mMessageDecoder = new NIMMessageDecoder();
 
     @Override
     public boolean connect(String ip, int port) {
@@ -62,7 +70,7 @@ public class NIMService implements IMServer<IMMessage>, IUserTransfer<LoginInfo>
     @Override
     public void login(GeaeIMUser user) {
         mUser = user;
-        LoginInfo info = transferTo(user); // config...
+        LoginInfo info = mUserDecoder.decode(user); // config...
         RequestCallback<LoginInfo> callback =
                 new RequestCallback<LoginInfo>() {
                     @Override
@@ -148,7 +156,7 @@ public class NIMService implements IMServer<IMMessage>, IUserTransfer<LoginInfo>
 
     @Override
     public void sendMessage(IMessage message) {
-        IMMessage msg = messageDecoder(message);
+        IMMessage msg = mMessageDecoder.messageDecoder(message);
         setIMMessage(msg);
         sendMessage(msg, message, new SendMessageLisenter() {
             @Override
@@ -199,24 +207,6 @@ public class NIMService implements IMServer<IMMessage>, IUserTransfer<LoginInfo>
                 Log.e(TAG, "发送异常");
             }
         });
-    }
-
-    ;
-
-    @Override
-    public IMMessage messageDecoder(IMessage message) {
-        IMMessage msg = null;
-        switch (message.getType()) {
-            case TEXT:
-                msg = MessageBuilder.createTextMessage(message.getTo(), onSendType(message.getSendType()), message.getContent() + "");
-                break;
-            case IMAGE:
-                ImageMessage imageMessage = (ImageMessage) message;
-                msg = MessageBuilder.createFileMessage(message.getTo(), onSendType(message.getSendType()), imageMessage.getContent(), "[图片]");
-                break;
-        }
-
-        return msg;
     }
 
     /**
@@ -285,19 +275,4 @@ public class NIMService implements IMServer<IMMessage>, IUserTransfer<LoginInfo>
         return null;
     }
 
-    @Override
-    public LoginInfo transferTo(GeaeIMUser user) {
-        return user == null ? null : new LoginInfo(user.getAccount(), user.getPsw());
-    }
-
-    @Override
-    public SessionTypeEnum onSendType(SendType type) {
-        SessionTypeEnum typeEnum = SessionTypeEnum.P2P;
-        switch (type) {
-            case GROUP:
-                typeEnum = SessionTypeEnum.ChatRoom;
-                break;
-        }
-        return typeEnum;
-    }
 }

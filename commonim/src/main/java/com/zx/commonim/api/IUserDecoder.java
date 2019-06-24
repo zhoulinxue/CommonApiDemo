@@ -7,6 +7,8 @@ import com.zx.commonim.bean.GeaeIMUser;
  * auther :zx
  * creatTime: 2019/6/20
  */
-public interface IUserTransfer<T> {
-    public T transferTo(GeaeIMUser user);
+public interface IUserDecoder<T> {
+    public T decode(GeaeIMUser user);
+
+    public GeaeIMUser encode(T t);
 }

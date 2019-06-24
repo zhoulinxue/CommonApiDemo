@@ -39,12 +39,7 @@ public interface IMServer<T> {
      */
     public void sendMessage(IMessage message);
 
-    /**
-     * 消息类型统一
-     * @param message
-     * @return
-     */
-    public T messageDecoder(IMessage message);
+
 
     /**
      * @param config
