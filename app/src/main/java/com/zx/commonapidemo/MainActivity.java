@@ -9,7 +9,7 @@ import android.view.animation.AnimationUtils;
 
 import com.zx.commonim.AppConfig;
 import com.zx.commonim.GaeaIMManager;
-import com.zx.commonim.impl.NIMService;
+import com.zx.commonim.impl.nim.NIMService;
 import com.zx.commonim.api.IMessage;
 import com.zx.commonim.message.TextMessage;
 

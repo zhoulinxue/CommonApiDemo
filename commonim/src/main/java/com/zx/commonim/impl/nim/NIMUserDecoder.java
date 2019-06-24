@@ -1,4 +1,4 @@
-package com.zx.commonim.impl;
+package com.zx.commonim.impl.nim;
 
 import com.netease.nimlib.sdk.auth.LoginInfo;
 import com.zx.commonim.api.IUserDecoder;

@@ -1,4 +1,4 @@
-package com.zx.commonim.impl;
+package com.zx.commonim.impl.nim;
 
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;

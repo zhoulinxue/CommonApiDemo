@@ -3,7 +3,7 @@ package com.zx.commonim.api;
 import com.zx.commonim.AppConfig;
 import com.zx.commonim.bean.GeaeIMRecord;
 import com.zx.commonim.bean.GeaeIMUser;
-import com.zx.commonim.impl.NIMService;
+import com.zx.commonim.impl.nim.NIMService;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.zx.commonim.impl;
+package com.zx.commonim.impl.nim;
 
 import com.netease.nimlib.sdk.msg.MessageBuilder;
 import com.netease.nimlib.sdk.msg.constant.SessionTypeEnum;
