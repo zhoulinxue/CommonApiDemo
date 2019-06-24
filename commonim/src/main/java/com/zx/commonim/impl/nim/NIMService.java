@@ -59,8 +59,11 @@ public class NIMService implements IMServer {
 
     @Override
     public boolean connect() {
-        NIMClient.init(mConfig.getContext(), mInfo, options());
-        return true;
+        if (mInfo!=null) {
+            NIMClient.init(mConfig.getContext(), mInfo, options());
+            return true;
+        }
+        return false;
     }
 
     @Override
@@ -157,7 +160,7 @@ public class NIMService implements IMServer {
         sendMessage(msg, message, new SendMessageLisenter() {
             @Override
             public void onSending(IMessage message) {
-
+                Log.e(TAG, message.getContent() + "");
             }
 
             @Override
