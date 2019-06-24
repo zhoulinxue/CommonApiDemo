@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-import com.zx.commonim.api.GeaeMessage;
+import com.zx.commonim.message.IMessage;
 import com.zx.commonim.api.IMServer;
 import com.zx.commonim.bean.GeaeIMRecord;
 import com.zx.commonim.bean.GeaeIMUser;
@@ -58,7 +58,7 @@ public class GaeaIMManager {
     /**
      * @param message
      */
-    public void sendMessage(GeaeMessage message) {
+    public void sendMessage(IMessage message) {
         if (imServer != null) {
             imServer.sendMessage(message);
         }

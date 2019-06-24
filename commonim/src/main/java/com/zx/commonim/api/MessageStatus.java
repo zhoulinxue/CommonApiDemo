@@ -3,8 +3,8 @@ package com.zx.commonim.api;
 /**
  * pakage :com.zx.commonim.api
  * auther :zx
- * creatTime: 2019/6/6
+ * creatTime: 2019/6/24
  */
-public interface GeaeMessage {
-
+public enum MessageStatus {
+    SENDING, FAILED, SUC;
 }

@@ -10,6 +10,8 @@ import android.view.animation.AnimationUtils;
 import com.zx.commonim.AppConfig;
 import com.zx.commonim.GaeaIMManager;
 import com.zx.commonim.impl.NIMService;
+import com.zx.commonim.message.IMessage;
+import com.zx.commonim.message.TextMessage;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -51,5 +53,7 @@ public class MainActivity extends AppCompatActivity {
         config.setAppDir(getCacheDir() + "/nim");
         config.setScreenWidth(1080);
         GaeaIMManager.getInstance(this).init(NIMService.class).initAppConfig(config).connect();
+        IMessage<String> iMessage= TextMessage.creatTextMessage("测试");
+        GaeaIMManager.getInstance(this).sendMessage(iMessage);
     }
 }

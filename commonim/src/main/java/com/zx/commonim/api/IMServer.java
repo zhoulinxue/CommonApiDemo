@@ -1,10 +1,9 @@
 package com.zx.commonim.api;
 
-import android.content.Context;
-
 import com.zx.commonim.AppConfig;
 import com.zx.commonim.bean.GeaeIMRecord;
 import com.zx.commonim.bean.GeaeIMUser;
+import com.zx.commonim.message.IMessage;
 import com.zx.commonim.impl.NIMService;
 
 import java.util.List;
@@ -37,9 +36,9 @@ public interface IMServer<T> {
     /**
      * 发送消息
      */
-    public void sendMessage(GeaeMessage message);
+    public void sendMessage(IMessage message);
 
-    public T transferMessage(GeaeMessage message);
+    public T transferMessage(IMessage message);
 
     /**
      * @param config

@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.RequestCallback;
@@ -12,12 +13,19 @@ import com.netease.nimlib.sdk.SDKOptions;
 import com.netease.nimlib.sdk.StatusBarNotificationConfig;
 import com.netease.nimlib.sdk.auth.AuthService;
 import com.netease.nimlib.sdk.auth.LoginInfo;
+import com.netease.nimlib.sdk.msg.MessageBuilder;
+import com.netease.nimlib.sdk.msg.MsgService;
+import com.netease.nimlib.sdk.msg.constant.MsgStatusEnum;
 import com.netease.nimlib.sdk.msg.constant.SessionTypeEnum;
+import com.netease.nimlib.sdk.msg.model.CustomMessageConfig;
 import com.netease.nimlib.sdk.msg.model.IMMessage;
+import com.netease.nimlib.sdk.msg.model.NIMAntiSpamOption;
 import com.netease.nimlib.sdk.uinfo.UserInfoProvider;
 import com.netease.nimlib.sdk.uinfo.model.UserInfo;
 import com.zx.commonim.AppConfig;
-import com.zx.commonim.api.GeaeMessage;
+import com.zx.commonim.api.MessageStatus;
+import com.zx.commonim.api.SendMessageLisenter;
+import com.zx.commonim.message.IMessage;
 import com.zx.commonim.api.IMServer;
 import com.zx.commonim.api.IUserTransfer;
 import com.zx.commonim.bean.GeaeIMRecord;
@@ -25,6 +33,7 @@ import com.zx.commonim.bean.GeaeIMUser;
 import com.zx.commonim.utils.Constants;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * pakage :com.zx.commonim.impl
@@ -32,6 +41,7 @@ import java.util.List;
  * creatTime: 2019/6/6
  */
 public class NIMService implements IMServer<IMMessage>, IUserTransfer<LoginInfo> {
+    private String TAG=NIMService.class.getSimpleName();
     private AppConfig mConfig;
     private GeaeIMUser mUser;
     LoginInfo mInfo = null;
@@ -135,15 +145,106 @@ public class NIMService implements IMServer<IMMessage>, IUserTransfer<LoginInfo>
     }
 
     @Override
-    public void sendMessage(GeaeMessage message) {
+    public void sendMessage(IMessage message) {
         IMMessage msg = transferMessage(message);
+        setIMMessage(mConfig.getContext(), msg);
+        sendMessage(msg, message, new SendMessageLisenter() {
+            @Override
+            public void onSending(IMessage message) {
 
+            }
+
+            @Override
+            public void onSendSuc(IMessage message) {
+
+            }
+
+            @Override
+            public void onFailed(IMessage message) {
+
+            }
+        });
 
     }
 
+    public void sendMessage(final IMMessage msg, final IMessage message, final SendMessageLisenter lisenter) {
+        if (lisenter != null) {
+            lisenter.onSending(message);
+        }
+        // 发送给对方
+        NIMClient.getService(MsgService.class).sendMessage(msg, false).setCallback(new RequestCallback<Void>() {
+            @Override
+            public void onSuccess(Void param) {
+                msg.setStatus(MsgStatusEnum.success);
+                message.setStatus(MessageStatus.SUC);
+                if (lisenter != null) {
+                    lisenter.onSendSuc(message);
+                }
+            }
+
+            @Override
+            public void onFailed(int code) {
+                msg.setStatus(MsgStatusEnum.fail);
+                message.setStatus(MessageStatus.FAILED);
+                if (lisenter != null) {
+                    lisenter.onFailed(message);
+                }
+            }
+
+            @Override
+            public void onException(Throwable exception) {
+                exception.printStackTrace();
+                Log.e(TAG, "发送异常");
+            }
+        });
+    }
+
+    ;
+
     @Override
-    public IMMessage transferMessage(GeaeMessage message) {
-        return null;
+    public IMMessage transferMessage(IMessage message) {
+        IMMessage msg = null;
+        switch (message.getType()) {
+            case TEXT:
+                msg = MessageBuilder.createTextMessage(message.getTo(), SessionTypeEnum.P2P, message.getContent() + "");
+                break;
+        }
+
+        return msg;
+    }
+
+    /**
+     * 设置远程消息配置
+     *
+     * @param message
+     * @return
+     */
+    private IMMessage setIMMessage(Context context, IMMessage message) {
+        Map aMap = mUser.toMap();
+        message.setRemoteExtension(aMap);
+
+        Map<String, Object> map = message.getLocalExtension();
+        if (map == null) {
+            message.setLocalExtension(aMap);
+        }
+
+        message.setConfig(getCustomMessageConfig());
+        //忽略易盾
+        NIMAntiSpamOption antiSpamOption = new NIMAntiSpamOption();
+        antiSpamOption.enable = false;
+        message.setNIMAntiSpamOption(antiSpamOption);
+        return message;
+    }
+
+    /**
+     * 消息配置
+     *
+     * @return
+     */
+    private CustomMessageConfig getCustomMessageConfig() {
+        CustomMessageConfig config = new CustomMessageConfig();
+        config.enableRoaming = false;
+        return config;
     }
 
     @Override
