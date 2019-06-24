@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-import com.zx.commonim.message.IMessage;
+import com.zx.commonim.api.IMessage;
 import com.zx.commonim.api.IMServer;
 import com.zx.commonim.bean.GeaeIMRecord;
 import com.zx.commonim.bean.GeaeIMUser;

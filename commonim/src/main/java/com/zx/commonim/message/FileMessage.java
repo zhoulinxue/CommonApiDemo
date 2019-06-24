@@ -1,5 +1,6 @@
 package com.zx.commonim.message;
 
+import com.zx.commonim.api.IMessage;
 import com.zx.commonim.impl.BaseMessage;
 
 import java.io.File;

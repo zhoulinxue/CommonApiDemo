@@ -6,7 +6,7 @@ import com.netease.nimlib.sdk.msg.model.IMMessage;
 import com.zx.commonim.api.IMessageDecoder;
 import com.zx.commonim.api.ISendType;
 import com.zx.commonim.constant.SendType;
-import com.zx.commonim.message.IMessage;
+import com.zx.commonim.api.IMessage;
 import com.zx.commonim.message.ImageMessage;
 
 /**

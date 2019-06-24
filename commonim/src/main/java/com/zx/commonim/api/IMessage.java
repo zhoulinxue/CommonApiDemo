@@ -1,4 +1,4 @@
-package com.zx.commonim.message;
+package com.zx.commonim.api;
 
 import com.zx.commonim.constant.MessageStatus;
 import com.zx.commonim.constant.MessageType;

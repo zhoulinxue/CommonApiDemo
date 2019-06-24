@@ -1,8 +1,5 @@
 package com.zx.commonim.api;
 
-import com.netease.nimlib.sdk.msg.model.IMMessage;
-import com.zx.commonim.message.IMessage;
-
 /**
  * pakage :com.zx.commonim.api
  * auther :zx

@@ -1,5 +1,6 @@
 package com.zx.commonim.message;
 
+import com.zx.commonim.api.IMessage;
 import com.zx.commonim.constant.MessageStatus;
 import com.zx.commonim.constant.MessageType;
 import com.zx.commonim.impl.BaseMessage;

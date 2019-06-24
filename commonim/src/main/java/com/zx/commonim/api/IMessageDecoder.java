@@ -1,7 +1,5 @@
 package com.zx.commonim.api;
 
-import com.zx.commonim.message.IMessage;
-
 /**
  * pakage :com.zx.commonim.api
  * auther :zx
