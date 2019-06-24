@@ -1,4 +1,4 @@
-package com.zx.commonim.api;
+package com.zx.commonim.constant;
 
 /**
  * pakage :com.zx.commonim.api

@@ -1,10 +1,8 @@
 package com.zx.commonim.message;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
-import com.zx.commonim.api.MessageStatus;
-import com.zx.commonim.api.MessageType;
+import com.zx.commonim.constant.MessageStatus;
+import com.zx.commonim.constant.MessageType;
+import com.zx.commonim.constant.SendType;
 
 /**
  * pakage :com.zx.commonim.api
@@ -31,4 +29,8 @@ public interface IMessage<T> {
     public String getTo();
 
     public T getContent();
+
+    SendType getSendType();
+
+    public void setSendType(SendType sendType);
 }

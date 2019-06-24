@@ -14,6 +14,7 @@ import java.util.List;
  * creatTime: 2019/6/6
  */
 public interface IMServer<T> {
+
     /**
      * 创建连接
      *
@@ -38,7 +39,12 @@ public interface IMServer<T> {
      */
     public void sendMessage(IMessage message);
 
-    public T transferMessage(IMessage message);
+    /**
+     * 消息类型统一
+     * @param message
+     * @return
+     */
+    public T messageDecoder(IMessage message);
 
     /**
      * @param config

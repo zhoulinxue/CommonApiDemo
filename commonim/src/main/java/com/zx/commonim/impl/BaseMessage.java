@@ -1,8 +1,8 @@
 package com.zx.commonim.impl;
 
-import com.zx.commonim.api.MessageStatus;
-import com.zx.commonim.api.MessageType;
-import com.zx.commonim.message.IMessage;
+import com.zx.commonim.constant.MessageStatus;
+import com.zx.commonim.constant.MessageType;
+import com.zx.commonim.constant.SendType;
 
 /**
  * pakage :com.zx.commonim.impl
@@ -16,6 +16,7 @@ public class BaseMessage {
     private String from;
     private String to;
     private MessageStatus status=MessageStatus.SENDING;
+    private SendType sendType=SendType.PERSON;
 
     public MessageStatus getStatus() {
         return status;
@@ -63,5 +64,14 @@ public class BaseMessage {
 
     public void setTime(String time) {
         this.time = time;
+    }
+
+    public SendType getSendType() {
+        return sendType;
+    }
+
+
+    public void setSendType(SendType type) {
+        this.sendType=type;
     }
 }

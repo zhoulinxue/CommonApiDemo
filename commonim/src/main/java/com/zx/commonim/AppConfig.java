@@ -1,13 +1,11 @@
 package com.zx.commonim;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 import com.zx.commonim.api.JsonParser;
 import com.zx.commonim.impl.FastjsonParser;
-import com.zx.commonim.utils.Constants;
 
 /**
  * pakage :com.zx.commonim

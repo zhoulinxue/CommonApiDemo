@@ -1,6 +1,5 @@
 package com.zx.commonim.impl;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -23,14 +22,17 @@ import com.netease.nimlib.sdk.msg.model.NIMAntiSpamOption;
 import com.netease.nimlib.sdk.uinfo.UserInfoProvider;
 import com.netease.nimlib.sdk.uinfo.model.UserInfo;
 import com.zx.commonim.AppConfig;
-import com.zx.commonim.api.MessageStatus;
+import com.zx.commonim.api.ISendType;
+import com.zx.commonim.constant.MessageStatus;
 import com.zx.commonim.api.SendMessageLisenter;
+import com.zx.commonim.constant.SendType;
 import com.zx.commonim.message.IMessage;
 import com.zx.commonim.api.IMServer;
 import com.zx.commonim.api.IUserTransfer;
 import com.zx.commonim.bean.GeaeIMRecord;
 import com.zx.commonim.bean.GeaeIMUser;
-import com.zx.commonim.utils.Constants;
+import com.zx.commonim.message.ImageMessage;
+import com.zx.commonim.constant.Constants;
 
 import java.util.List;
 import java.util.Map;
@@ -40,8 +42,8 @@ import java.util.Map;
  * auther :zx
  * creatTime: 2019/6/6
  */
-public class NIMService implements IMServer<IMMessage>, IUserTransfer<LoginInfo> {
-    private String TAG=NIMService.class.getSimpleName();
+public class NIMService implements IMServer<IMMessage>, IUserTransfer<LoginInfo>, ISendType<SessionTypeEnum> {
+    private String TAG = NIMService.class.getSimpleName();
     private AppConfig mConfig;
     private GeaeIMUser mUser;
     LoginInfo mInfo = null;
@@ -146,8 +148,8 @@ public class NIMService implements IMServer<IMMessage>, IUserTransfer<LoginInfo>
 
     @Override
     public void sendMessage(IMessage message) {
-        IMMessage msg = transferMessage(message);
-        setIMMessage(mConfig.getContext(), msg);
+        IMMessage msg = messageDecoder(message);
+        setIMMessage(msg);
         sendMessage(msg, message, new SendMessageLisenter() {
             @Override
             public void onSending(IMessage message) {
@@ -202,11 +204,15 @@ public class NIMService implements IMServer<IMMessage>, IUserTransfer<LoginInfo>
     ;
 
     @Override
-    public IMMessage transferMessage(IMessage message) {
+    public IMMessage messageDecoder(IMessage message) {
         IMMessage msg = null;
         switch (message.getType()) {
             case TEXT:
-                msg = MessageBuilder.createTextMessage(message.getTo(), SessionTypeEnum.P2P, message.getContent() + "");
+                msg = MessageBuilder.createTextMessage(message.getTo(), onSendType(message.getSendType()), message.getContent() + "");
+                break;
+            case IMAGE:
+                ImageMessage imageMessage = (ImageMessage) message;
+                msg = MessageBuilder.createFileMessage(message.getTo(), onSendType(message.getSendType()), imageMessage.getContent(), "[图片]");
                 break;
         }
 
@@ -219,7 +225,7 @@ public class NIMService implements IMServer<IMMessage>, IUserTransfer<LoginInfo>
      * @param message
      * @return
      */
-    private IMMessage setIMMessage(Context context, IMMessage message) {
+    private IMMessage setIMMessage(IMMessage message) {
         Map aMap = mUser.toMap();
         message.setRemoteExtension(aMap);
 
@@ -282,5 +288,16 @@ public class NIMService implements IMServer<IMMessage>, IUserTransfer<LoginInfo>
     @Override
     public LoginInfo transferTo(GeaeIMUser user) {
         return user == null ? null : new LoginInfo(user.getAccount(), user.getPsw());
+    }
+
+    @Override
+    public SessionTypeEnum onSendType(SendType type) {
+        SessionTypeEnum typeEnum = SessionTypeEnum.P2P;
+        switch (type) {
+            case GROUP:
+                typeEnum = SessionTypeEnum.ChatRoom;
+                break;
+        }
+        return typeEnum;
     }
 }
