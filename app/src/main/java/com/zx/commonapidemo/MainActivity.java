@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         config.setIcon(R.mipmap.ic_launcher);
         config.setAppDir(getCacheDir() + "/nim");
         config.setScreenWidth(1080);
-        GaeaIMManager.getInstance(this).init(NIMService.class).initAppConfig(config).connect();
+        GaeaIMManager.getInstance(this).creatServer(NIMService.class).initAppConfig(config).connect();
         IMessage<String> iMessage= TextMessage.creatTextMessage("测试");
         GaeaIMManager.getInstance(this).sendMessage(iMessage);
     }

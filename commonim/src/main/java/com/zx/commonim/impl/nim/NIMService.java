@@ -59,7 +59,7 @@ public class NIMService implements IMServer {
 
     @Override
     public boolean connect() {
-        if (mInfo!=null) {
+        if (mInfo != null) {
             NIMClient.init(mConfig.getContext(), mInfo, options());
             return true;
         }
@@ -155,32 +155,33 @@ public class NIMService implements IMServer {
 
     @Override
     public void sendMessage(IMessage message) {
-        if(mUser==null){
-            Log.e(TAG,"未获取到登录信息....请先登录"+message.getContent());
-            return;
-        }
-        IMMessage msg = mMessageDecoder.messageDecoder(message);
-        setIMMessage(msg);
-        sendMessage(msg, message, new SendMessageLisenter() {
+        sendMessage(message, new SendMessageLisenter() {
             @Override
             public void onSending(IMessage message) {
-                Log.e(TAG, message.getContent() + "");
+                Log.e(TAG, message.getContent() + "......onSending");
             }
 
             @Override
             public void onSendSuc(IMessage message) {
-
+                Log.e(TAG, "onSendSuc");
             }
 
             @Override
             public void onFailed(IMessage message) {
-
+                Log.e(TAG, "onFailed");
             }
         });
 
     }
 
-    public void sendMessage(final IMMessage msg, final IMessage message, final SendMessageLisenter lisenter) {
+    @Override
+    public void sendMessage(final IMessage message, final SendMessageLisenter lisenter) {
+      final   IMMessage msg = mMessageDecoder.messageDecoder(message);
+        if (mUser == null) {
+            Log.e(TAG, message.getContent()+".....未获取到登录信息....请先登录");
+            return;
+        }
+        setIMMessage(msg);
         if (lisenter != null) {
             lisenter.onSending(message);
         }
@@ -217,6 +218,7 @@ public class NIMService implements IMServer {
         });
     }
 
+
     /**
      * 设置远程消息配置
      *
@@ -243,7 +245,7 @@ public class NIMService implements IMServer {
 
 
     @Override
-    public NIMService initAppConfig(AppConfig config) {
+    public IMServer initAppConfig(AppConfig config) {
         this.mConfig = config;
         String account = getAccount();
         if (!TextUtils.isEmpty(account)) {

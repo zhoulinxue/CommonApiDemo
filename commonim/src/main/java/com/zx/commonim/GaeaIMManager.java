@@ -6,6 +6,7 @@ import android.preference.PreferenceManager;
 
 import com.zx.commonim.api.IMessage;
 import com.zx.commonim.api.IMServer;
+import com.zx.commonim.api.SendMessageLisenter;
 import com.zx.commonim.bean.GeaeIMRecord;
 import com.zx.commonim.bean.GeaeIMUser;
 
@@ -41,12 +42,12 @@ public class GaeaIMManager {
         return manager;
     }
 
-    public IMServer init(Class mClass) {
+    public IMServer creatServer(Class mClass) {
         imServer = (IMServer) create(mClass);
         return imServer;
     }
 
-    public static <T> T create(Class<T> service) {
+    private static <T> T create(Class<T> service) {
         try {
             return (T) service.newInstance();
         } catch (Exception e) {
@@ -61,6 +62,15 @@ public class GaeaIMManager {
     public void sendMessage(IMessage message) {
         if (imServer != null) {
             imServer.sendMessage(message);
+        }
+    }
+
+    /**
+     * @param message
+     */
+    public void sendMessage(IMessage message, SendMessageLisenter lisenter) {
+        if (imServer != null) {
+            imServer.sendMessage(message, lisenter);
         }
     }
 

@@ -38,12 +38,19 @@ public interface IMServer {
      */
     public void sendMessage(IMessage message);
 
+    /**
+     * 发送 消息
+     * @param message 消息
+     * @param lisenter 发送监听
+     */
+    public void sendMessage(IMessage message,SendMessageLisenter lisenter);
+
 
 
     /**
      * @param config
      */
-    public NIMService initAppConfig(AppConfig config);
+    public IMServer initAppConfig(AppConfig config);
 
     /**
      * 获取 用户资料
