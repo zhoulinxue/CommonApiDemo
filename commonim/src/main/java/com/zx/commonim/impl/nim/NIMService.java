@@ -155,6 +155,10 @@ public class NIMService implements IMServer {
 
     @Override
     public void sendMessage(IMessage message) {
+        if(mUser==null){
+            Log.e(TAG,"未获取到登录信息....请先登录"+message.getContent());
+            return;
+        }
         IMMessage msg = mMessageDecoder.messageDecoder(message);
         setIMMessage(msg);
         sendMessage(msg, message, new SendMessageLisenter() {
