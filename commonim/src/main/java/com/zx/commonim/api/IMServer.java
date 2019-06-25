@@ -77,4 +77,9 @@ public interface IMServer {
      * @return
      */
     public List<GeaeIMRecord> getIMRecord(String uid);
+
+    /**
+     * 退出登录
+     */
+    public void logout();
 }

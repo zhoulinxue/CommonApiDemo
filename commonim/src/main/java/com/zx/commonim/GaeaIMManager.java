@@ -100,4 +100,10 @@ public class GaeaIMManager {
         return new ArrayList<>();
     }
 
+    public void logOut(){
+        if(imServer!=null){
+            imServer.logout();
+        }
+    }
+
 }

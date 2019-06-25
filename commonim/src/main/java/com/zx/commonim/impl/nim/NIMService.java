@@ -41,16 +41,17 @@ import java.util.Map;
  */
 public class NIMService implements IMServer {
     private String TAG = NIMService.class.getSimpleName();
+    // 用户信息 编、解 器
+    IUserDecoder<LoginInfo> mUserDecoder = new NIMUserDecoder();
+    // 消息信息  编、解 器
+    IMessageDecoder<IMMessage> mMessageDecoder = new NIMMessageDecoder();
     // 应用配置类
     private AppConfig mConfig;
     // 用户信息类
     private GeaeIMUser mUser;
     // 第三方 用户信息类
-    LoginInfo mInfo = null;
-    // 用户信息 编、解 器
-    IUserDecoder<LoginInfo> mUserDecoder = new NIMUserDecoder();
-    // 消息信息  编、解 器
-    IMessageDecoder<IMMessage> mMessageDecoder = new NIMMessageDecoder();
+    private LoginInfo mInfo = null;
+
 
     @Override
     public boolean connect(String ip, int port) {
@@ -176,9 +177,9 @@ public class NIMService implements IMServer {
 
     @Override
     public void sendMessage(final IMessage message, final SendMessageLisenter lisenter) {
-      final   IMMessage msg = mMessageDecoder.messageDecoder(message);
+        final IMMessage msg = mMessageDecoder.messageDecoder(message);
         if (mUser == null) {
-            Log.e(TAG, message.getContent()+".....未获取到登录信息....请先登录");
+            Log.e(TAG, message.getContent() + ".....未获取到登录信息....请先登录");
             return;
         }
         setIMMessage(msg);
@@ -274,6 +275,11 @@ public class NIMService implements IMServer {
     @Override
     public List<GeaeIMRecord> getIMRecord(String uid) {
         return null;
+    }
+
+    @Override
+    public void logout() {
+        NIMClient.getService(AuthService.class).logout();
     }
 
 }
