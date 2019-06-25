@@ -46,16 +46,9 @@ public class MainActivity extends AppCompatActivity {
                 view.startAnimation(animation);
             }
         });
-        AppConfig config = new AppConfig(this);
-        config.setPreference(PreferenceManager.getDefaultSharedPreferences(this));
-        config.setEnterClass(MainActivity.class);
-        config.setIcon(R.mipmap.ic_launcher);
-        config.setAppDir(getCacheDir() + "/nim");
-        config.setScreenWidth(1080);
 
 
-        GaeaIMManager.getInstance(this).creatServer(NIMService.class).initAppConfig(config).connect();
-        IMessage<String> iMessage= TextMessage.creatTextMessage("测试");
+        IMessage<String> iMessage = TextMessage.creatTextMessage("测试", "abcd");
         GaeaIMManager.getInstance(this).sendMessage(iMessage);
 
     }

@@ -14,12 +14,12 @@ public class TextMessage extends BaseMessage implements IMessage<String> {
 
     private String content;
 
-    public TextMessage(String content) {
+    public TextMessage(String content, String to) {
         this.content = content;
     }
 
-    public static TextMessage creatTextMessage(String text) {
-        return new TextMessage(text);
+    public static TextMessage creatTextMessage(String text, String to) {
+        return new TextMessage(text, to);
     }
 
     @Override
