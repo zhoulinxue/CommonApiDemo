@@ -22,7 +22,7 @@ public class App extends MultiDexApplication {
     }
 
     private void initIm() {
-        AppConfig config = new AppConfig(this);
+        AppConfig config = new AppConfig(this, new GsonParser());
         config.setPreference(PreferenceManager.getDefaultSharedPreferences(this));
         config.setEnterClass(MainActivity.class);
         config.setIcon(R.mipmap.ic_launcher);

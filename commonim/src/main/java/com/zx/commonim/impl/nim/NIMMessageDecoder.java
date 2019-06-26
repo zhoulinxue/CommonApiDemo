@@ -5,7 +5,7 @@ import com.netease.nimlib.sdk.msg.constant.SessionTypeEnum;
 import com.netease.nimlib.sdk.msg.model.IMMessage;
 import com.zx.commonim.api.IMessageDecoder;
 import com.zx.commonim.api.ISendType;
-import com.zx.commonim.api.JsonParser;
+import com.zx.commonim.api.IJsonParser;
 import com.zx.commonim.constant.Constants;
 import com.zx.commonim.constant.SendType;
 import com.zx.commonim.api.IMessage;
@@ -19,7 +19,7 @@ import com.zx.commonim.utils.Base64Utils;
  * creatTime: 2019/6/24
  */
 public class NIMMessageDecoder implements IMessageDecoder<IMMessage>, ISendType<SessionTypeEnum> {
-    private JsonParser mParser = new FastjsonParser();
+    private IJsonParser mParser = new FastjsonParser();
 
     @Override
     public IMMessage messageDecoder(IMessage message) {

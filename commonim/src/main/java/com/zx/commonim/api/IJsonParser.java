@@ -8,7 +8,7 @@ package com.zx.commonim.api;
 
 import java.io.UnsupportedEncodingException;
 
-public interface JsonParser {
+public interface IJsonParser {
     // 对象转str
     public String toJSONString(Object object);
 

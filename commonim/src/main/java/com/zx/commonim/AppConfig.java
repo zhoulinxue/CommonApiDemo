@@ -2,10 +2,8 @@ package com.zx.commonim;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 
-import com.zx.commonim.api.JsonParser;
-import com.zx.commonim.impl.FastjsonParser;
+import com.zx.commonim.api.IJsonParser;
 
 /**
  * pakage :com.zx.commonim
@@ -19,13 +17,13 @@ public class AppConfig {
     private int mScreenWidth;
     private Context mContext;
     private SharedPreferences mPreference;
-    private JsonParser mParser;
+    private IJsonParser mParser;
 
-    public JsonParser getParser() {
+    public IJsonParser getParser() {
         return mParser;
     }
 
-    public void setParser(JsonParser mParser) {
+    public void setParser(IJsonParser mParser) {
         this.mParser = mParser;
     }
 
@@ -37,10 +35,9 @@ public class AppConfig {
         this.mPreference = mPreference;
     }
 
-    public AppConfig(Context mContext) {
+    public AppConfig(Context mContext, IJsonParser mParser) {
         this.mContext = mContext;
-        mPreference = PreferenceManager.getDefaultSharedPreferences(mContext);
-        mParser=new FastjsonParser();
+        this.mParser = mParser;
     }
 
     public Class getEnterClass() {
