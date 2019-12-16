@@ -61,6 +61,7 @@ public class NIMService implements IMServer {
     @Override
     public boolean connect() {
         NIMClient.init(mConfig.getContext(), mInfo, options());
+        Log.e(TAG, "是否登陆过：" + (mInfo == null));
         return mInfo == null;
     }
 
