@@ -1,9 +1,8 @@
 package com.zx.commonim.api;
 
 import com.zx.commonim.AppConfig;
-import com.zx.commonim.bean.GeaeIMRecord;
-import com.zx.commonim.bean.GeaeIMUser;
-import com.zx.commonim.impl.nim.NIMService;
+import com.zx.commonim.bean.CommonIMRecord;
+import com.zx.commonim.bean.CommonIMUser;
 
 import java.util.List;
 
@@ -31,7 +30,7 @@ public interface IMServer {
     /**
      * @param user
      */
-    public void login(GeaeIMUser user);
+    public void login(CommonIMUser user);
 
     /**
      * 发送消息
@@ -69,14 +68,14 @@ public interface IMServer {
      * @param uid
      * @return
      */
-    public List<GeaeIMUser> getContactList(String uid);
+    public List<CommonIMUser> getContactList(String uid);
 
     /**
      *
      * @param uid
      * @return
      */
-    public List<GeaeIMRecord> getIMRecord(String uid);
+    public List<CommonIMRecord> getIMRecord(String uid);
 
     /**
      * 退出登录

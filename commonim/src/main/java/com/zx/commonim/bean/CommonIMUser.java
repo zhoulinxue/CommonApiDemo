@@ -8,7 +8,7 @@ import java.util.Map;
  * auther :zx
  * creatTime: 2019/6/6
  */
-public class GeaeIMUser {
+public class CommonIMUser {
     private String account;
     private String psw;
     private String name;

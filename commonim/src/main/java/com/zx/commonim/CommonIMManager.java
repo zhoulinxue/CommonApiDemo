@@ -7,8 +7,8 @@ import android.preference.PreferenceManager;
 import com.zx.commonim.api.IMessage;
 import com.zx.commonim.api.IMServer;
 import com.zx.commonim.api.SendMessageLisenter;
-import com.zx.commonim.bean.GeaeIMRecord;
-import com.zx.commonim.bean.GeaeIMUser;
+import com.zx.commonim.bean.CommonIMRecord;
+import com.zx.commonim.bean.CommonIMUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,13 +18,13 @@ import java.util.List;
  * auther :zx
  * creatTime: 2019/6/6
  */
-public class GaeaIMManager {
-    private static GaeaIMManager manager;
+public class CommonIMManager {
+    private static CommonIMManager manager;
     private static IMServer imServer;
     private Context mContext;
     private static SharedPreferences mPreference;
 
-    public GaeaIMManager(Context mContext) {
+    public CommonIMManager(Context mContext) {
         this.mContext = mContext;
     }
 
@@ -34,10 +34,10 @@ public class GaeaIMManager {
      * @param context
      * @return
      */
-    public static GaeaIMManager getInstance(Context context) {
+    public static CommonIMManager getInstance(Context context) {
         if (manager == null) {
             mPreference = PreferenceManager.getDefaultSharedPreferences(context);
-            manager = new GaeaIMManager(context);
+            manager = new CommonIMManager(context);
         }
         return manager;
     }
@@ -80,7 +80,7 @@ public class GaeaIMManager {
      * @param uid
      * @return
      */
-    public List<GeaeIMUser> getContactList(String uid) {
+    public List<CommonIMUser> getContactList(String uid) {
         if (imServer != null) {
             return imServer.getContactList(uid);
         }
@@ -93,7 +93,7 @@ public class GaeaIMManager {
      * @param uid
      * @return
      */
-    public List<GeaeIMRecord> getRecord(String uid) {
+    public List<CommonIMRecord> getRecord(String uid) {
         if (imServer != null) {
             imServer.getIMRecord(uid);
         }

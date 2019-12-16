@@ -6,7 +6,7 @@ import android.support.multidex.MultiDex;
 import android.support.multidex.MultiDexApplication;
 
 import com.zx.commonim.AppConfig;
-import com.zx.commonim.GaeaIMManager;
+import com.zx.commonim.CommonIMManager;
 import com.zx.commonim.impl.nim.NIMService;
 
 /**
@@ -28,7 +28,7 @@ public class App extends MultiDexApplication {
         config.setIcon(R.mipmap.ic_launcher);
         config.setAppDir(getCacheDir() + "/nim");
         config.setScreenWidth(1080);
-        GaeaIMManager.getInstance(this).creatServer(NIMService.class).initAppConfig(config).connect();
+        CommonIMManager.getInstance(this).creatServer(NIMService.class).initAppConfig(config).connect();
     }
 
     @Override

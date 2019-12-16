@@ -27,8 +27,8 @@ import com.zx.commonim.api.SendMessageLisenter;
 import com.zx.commonim.api.IMessage;
 import com.zx.commonim.api.IMServer;
 import com.zx.commonim.api.IUserDecoder;
-import com.zx.commonim.bean.GeaeIMRecord;
-import com.zx.commonim.bean.GeaeIMUser;
+import com.zx.commonim.bean.CommonIMRecord;
+import com.zx.commonim.bean.CommonIMUser;
 import com.zx.commonim.constant.Constants;
 
 import java.util.List;
@@ -48,7 +48,7 @@ public class NIMService implements IMServer {
     // 应用配置类
     private AppConfig mConfig;
     // 用户信息类
-    private GeaeIMUser mUser;
+    private CommonIMUser mUser;
     // 第三方 用户信息类
     private LoginInfo mInfo = null;
 
@@ -68,7 +68,7 @@ public class NIMService implements IMServer {
     }
 
     @Override
-    public void login(GeaeIMUser user) {
+    public void login(CommonIMUser user) {
         mUser = user;
         LoginInfo info = mUserDecoder.decode(user); // config...
         RequestCallback<LoginInfo> callback =
@@ -268,12 +268,12 @@ public class NIMService implements IMServer {
     }
 
     @Override
-    public List<GeaeIMUser> getContactList(String uid) {
+    public List<CommonIMUser> getContactList(String uid) {
         return null;
     }
 
     @Override
-    public List<GeaeIMRecord> getIMRecord(String uid) {
+    public List<CommonIMRecord> getIMRecord(String uid) {
         return null;
     }
 

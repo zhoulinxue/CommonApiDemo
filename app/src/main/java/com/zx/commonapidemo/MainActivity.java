@@ -1,15 +1,12 @@
 package com.zx.commonapidemo;
 
-import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
-import com.zx.commonim.AppConfig;
-import com.zx.commonim.GaeaIMManager;
-import com.zx.commonim.impl.nim.NIMService;
+import com.zx.commonim.CommonIMManager;
 import com.zx.commonim.api.IMessage;
 import com.zx.commonim.message.TextMessage;
 
@@ -49,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         IMessage<String> iMessage = TextMessage.creatTextMessage("测试", "abcd");
-        GaeaIMManager.getInstance(this).sendMessage(iMessage);
+        CommonIMManager.getInstance(this).sendMessage(iMessage);
 
     }
 }
