@@ -60,11 +60,8 @@ public class NIMService implements IMServer {
 
     @Override
     public boolean connect() {
-        if (mInfo != null) {
-            NIMClient.init(mConfig.getContext(), mInfo, options());
-            return true;
-        }
-        return false;
+        NIMClient.init(mConfig.getContext(), mInfo, options());
+        return mInfo == null;
     }
 
     @Override
@@ -252,12 +249,15 @@ public class NIMService implements IMServer {
         if (!TextUtils.isEmpty(account)) {
             mInfo = (LoginInfo) mConfig.getParser().parseObject(account, LoginInfo.class);
         }
+        Log.e(TAG, "mInfo = " + (mInfo == null));
         return this;
     }
 
     @Override
     public String getAccount() {
-        return mConfig.getPreference().getString(Constants.NIM_LOGIN_INFO, "");
+        String account = mConfig.getPreference().getString(Constants.NIM_LOGIN_INFO, "");
+        Log.e(TAG, "getAccount...." + account);
+        return account;
     }
 
     @Override
